@@ -2,14 +2,12 @@
     "type": "header",
     "name":"header-group",
     "sections": {
-    "header":{
+    "premium-header":{
         "type": "premium-header",
     
     }
-
-
     },
     "order":[
-        "header"
+        "premium-header"
     ]
 }
