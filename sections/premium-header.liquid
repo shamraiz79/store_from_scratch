@@ -1,0 +1,347 @@
+{% style %}
+  .premium-header-wrapper {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background-color: #ffffff;
+    border-bottom: 1px solid #eaeaea;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+  }
+
+  /* Container remains relative to anchor the centered mega menu */
+  .premium-header-container {
+    position: relative; 
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  @media (min-width: 768px) {
+    .premium-header-container {
+      padding: 20px 40px;
+    }
+  }
+
+  .premium-nav {
+    flex: 1;
+    display: none;
+    gap: 32px;
+  }
+
+  @media (min-width: 768px) {
+    .premium-nav {
+      display: flex;
+    }
+  }
+
+  /* Base Navigation Links */
+  .premium-nav-item {
+    padding: 10px 0;
+  }
+  
+  .premium-nav-item.has-dropdown {
+    position: relative;
+  }
+
+  .premium-nav-link {
+    text-decoration: none;
+    color: #111;
+    font-weight: 500;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: color 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .premium-nav-link:hover {
+    color: #666;
+  }
+
+  /* --- DROPDOWN STYLES --- */
+  .premium-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: #fff;
+    min-width: 220px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    border: 1px solid #eaeaea;
+    border-radius: 8px;
+    padding: 10px 0;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+    z-index: 10;
+  }
+
+  .premium-nav-item:hover .premium-dropdown {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  .premium-dropdown a {
+    display: block;
+    padding: 8px 20px;
+    color: #333;
+    text-decoration: none;
+    font-size: 0.9rem;
+    text-transform: none;
+  }
+
+  .premium-dropdown a:hover {
+    background: #f9f9f9;
+    color: #111;
+  }
+
+  /* --- MEGA MENU STYLES --- */
+  .premium-mega-menu {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    width: 850px; /* Specific width to match the reference card */
+    max-width: 95vw;
+    min-height: 380px; /* Adds spacious height */
+    background: #fff;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.08); /* Softer, wider shadow */
+    border-radius: 12px; /* Rounded corners */
+    border: 1px solid #eaeaea;
+    padding: 40px 50px;
+    opacity: 0;
+    visibility: hidden;
+    /* translate(-50%) perfectly centers it relative to the header container */
+    transform: translate(-50%, 15px);
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    z-index: 10;
+    display: flex;
+    gap: 50px;
+  }
+
+  /* Crucial: Maintain the -50% translation on hover */
+  .premium-nav-item:hover .premium-mega-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, 0);
+  }
+
+  .mega-menu-column {
+    flex: 1;
+  }
+
+  .mega-menu-title {
+    display: block;
+    font-weight: 700;
+    font-size: 0.95rem;
+    margin-bottom: 15px;
+    color: #111;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+
+  .mega-menu-link {
+    display: block;
+    color: #555;
+    text-decoration: none;
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+    transition: color 0.2s ease;
+  }
+
+  .mega-menu-link:hover {
+    color: #111;
+  }
+
+  /* Other Header Elements */
+  .premium-logo-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    text-decoration: none;
+  }
+
+  .premium-logo-image {
+    max-height: 45px;
+    width: auto;
+    object-fit: contain;
+  }
+
+  .premium-logo-text {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #111;
+    margin: 0;
+    letter-spacing: 1px;
+  }
+
+  .premium-header-actions {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .premium-action-link {
+    text-decoration: none;
+    color: #111;
+    font-weight: 500;
+    font-size: 0.95rem;
+    position: relative;
+  }
+
+  .premium-cart-count {
+    position: absolute;
+    top: -10px;
+    right: -14px;
+    background-color: #111;
+    color: #fff;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 12px;
+    min-width: 18px;
+    text-align: center;
+  }
+{% endstyle %}
+
+<header class="premium-header-wrapper">
+  <div class="premium-header-container">
+
+    <nav class="premium-nav" aria-label="Main navigation">
+      {% if section.settings.menu != blank %}
+        {% for link in section.settings.menu.links %}
+          
+          <div class="premium-nav-item {% if section.settings.menu_style == 'dropdown' %}has-dropdown{% endif %}">
+            
+            <a href="{{ link.url }}" class="premium-nav-link">
+              {{ link.title }}
+              {% if link.links != blank %}
+                <svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              {% endif %}
+            </a>
+
+            {% if link.links != blank %}
+              {% if section.settings.menu_style == 'mega' %}
+                <div class="premium-mega-menu">
+                  {% for childlink in link.links %}
+                    <div class="mega-menu-column">
+                      <a href="{{ childlink.url }}" class="mega-menu-title">{{ childlink.title }}</a>
+                      {% if childlink.links != blank %}
+                        {% for grandchildlink in childlink.links %}
+                          <a href="{{ grandchildlink.url }}" class="mega-menu-link">{{ grandchildlink.title }}</a>
+                        {% endfor %}
+                      {% endif %}
+                    </div>
+                  {% endfor %}
+                </div>
+              {% else %}
+                <div class="premium-dropdown">
+                  {% for childlink in link.links %}
+                    <a href="{{ childlink.url }}">{{ childlink.title }}</a>
+                  {% endfor %}
+                </div>
+              {% endif %}
+            {% endif %}
+          </div>
+        {% endfor %}
+      {% endif %}
+    </nav>
+
+    <a href="{{ routes.root_url }}" class="premium-logo-container">
+      {% if section.settings.custom_logo != blank %}
+        {{
+          shop.brand.logo
+          | image_url: width: 400
+          | image_tag: class: 'premium-logo-image', alt: shop.name
+        }}
+      {% else %}
+        <h2 class="premium-logo-text">{{ shop.name }}</h2>
+      {% endif %}
+    </a>
+
+    <div class="premium-header-actions">
+      {% if shop.customer_accounts_enabled %}
+        <a href="{{ routes.account_url }}" class="premium-action-link">Account</a>
+      {% endif %}
+
+      <a href="{{ routes.cart_url }}" class="premium-action-link">
+        Cart
+        {% if cart.item_count > 0 %}
+          <span class="premium-cart-count">{{ cart.item_count }}</span>
+        {% endif %}
+      </a>
+    </div>
+
+  </div>
+</header>
+
+{% schema %}
+{
+  "name": "Premium Header",
+  "tag": "section",
+  "class": "premium-header-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Logo Settings"
+    },
+    {
+      "type": "image_picker",
+      "id": "custom_logo",
+      "label": "Custom Logo",
+      "info": "If left blank, the global store logo will be used."
+    },
+    {
+      "type": "range",
+      "id": "logo_width",
+      "min": 50,
+      "max": 300,
+      "step": 10,
+      "unit": "px",
+      "label": "Logo width",
+      "default": 150
+    },
+    {
+      "type": "header",
+      "content": "Navigation Settings"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Navigation Menu",
+      "default": "main-menu"
+    },
+    {
+      "type": "select",
+      "id": "menu_style",
+      "label": "Desktop Menu Layout",
+      "options": [
+        {
+          "value": "dropdown",
+          "label": "Standard Dropdown"
+        },
+        {
+          "value": "mega",
+          "label": "Mega Menu"
+        }
+      ],
+      "default": "dropdown",
+      "info": "Mega menu will display nested link levels in horizontal columns."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Premium Header"
+    }
+  ]
+}
+{% endschema %}

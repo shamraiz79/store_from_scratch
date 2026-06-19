@@ -1,0 +1,332 @@
+{% style %}
+  /* Scoped CSS for the Premium Cart Page */
+  .premium-cart-container {
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 0 20px;
+    font-family: inherit;
+    color: #333;
+  }
+
+  .premium-cart-header {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .premium-cart-header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #111;
+  }
+
+  /* Empty Cart State */
+  .premium-cart-empty {
+    text-align: center;
+    padding: 60px 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+  }
+
+  .premium-continue-shopping {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 12px 24px;
+    background-color: #111;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: 600;
+    transition: background-color 0.2s;
+  }
+
+  .premium-continue-shopping:hover {
+    background-color: #333;
+  }
+
+  /* Cart Items Layout */
+  .premium-cart-form {
+    display: flex;
+    flex-direction: column;
+   
+  }
+
+  .premium-cart-item {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid #eaeaea;
+    flex-wrap: wrap; /* Allows stacking on small screens */
+  }
+
+  .premium-item-image {
+    width: 100px;
+    height: 100px;
+    border-radius: 6px;
+    object-fit: cover;
+    background-color: #f4f4f4;
+  }
+
+  .premium-item-details {
+    flex: 2;
+    min-width: 200px;
+  }
+
+  .premium-item-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #111;
+    text-decoration: none;
+    margin: 0 0 4px 0;
+    display: block;
+  }
+
+  .premium-item-variant {
+    font-size: 0.9rem;
+    color: #666;
+    margin: 0 0 8px 0;
+  }
+
+  /* Stylish Remove Button */
+.premium-item-remove {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 14px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #ef4444; /* Modern, crisp red */
+  background-color: #fef2f2; /* Soft red background */
+  border: 1px solid transparent;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: all 0.2s ease-in-out;
+}
+
+.premium-item-remove:hover {
+  background-color: #fee2e2;
+  color: #b91c1c;
+  border-color: #fca5a5;
+  text-decoration: none;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(239, 68, 68, 0.1);
+}
+
+.premium-item-remove:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+  .premium-item-quantity {
+    flex: 1;
+    min-width: 80px;
+    display: flex;
+    align-items: center;
+  }
+
+  .premium-item-quantity input {
+    width: 60px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    text-align: center;
+    font-size: 1rem;
+  }
+
+  .premium-item-price {
+    flex: 1;
+    text-align: right;
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: #111;
+    min-width: 80px;
+  }
+
+  /* Cart Footer (Subtotal & Checkout) */
+  .premium-cart-footer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 16px;
+    padding-top: 16px;
+  }
+
+  .premium-cart-subtotal {
+    font-size: 1.3rem;
+    font-weight: 500;
+    color: #333;
+  }
+
+  .premium-cart-subtotal strong {
+    font-size: 1.5rem;
+    color: #111;
+    margin-left: 12px;
+  }
+
+  .premium-cart-notes {
+    font-size: 0.9rem;
+    color: #666;
+  }
+
+  .premium-checkout-button {
+    background-color: #111;
+    color: #fff;
+    border: none;
+    padding: 16px 40px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .premium-checkout-button:hover {
+    background-color: #333;
+  }
+
+
+/* Cart Footer (Subtotal & Buttons) */
+  .premium-cart-footer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 16px;
+    padding-top: 24px;
+    border-top: 1px solid #eaeaea;
+  }
+
+  .premium-cart-subtotal {
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: #333;
+  }
+
+  .premium-cart-subtotal strong {
+    font-size: 1.4rem;
+    color: #111;
+    margin-left: 12px;
+  }
+
+  /* Button Layout Container */
+  .premium-cart-actions {
+    display: flex;
+    gap: 12px;
+    width: 100%;
+    justify-content: flex-end;
+  }
+
+  /* Standardized Small Button Sizing */
+  .premium-cart-btn {
+    padding: 12px 24px; /* Reduced from 16px 40px */
+    font-size: 0.95rem; /* Standardized text size */
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    width: auto; /* Allows button to fit content rather than stretching */
+    min-width: 140px;
+  }
+
+  /* Secondary Style: Update Cart */
+  .premium-update-button {
+    background-color: transparent;
+    color: #111;
+    border: 1px solid #ccc;
+  }
+
+  .premium-update-button:hover {
+    border-color: #111;
+    background-color: #f9f9f9;
+  }
+
+  /* Primary Style: Checkout */
+  .premium-checkout-button {
+    background-color: #111;
+    color: #fff;
+    border: 1px solid #111;
+  }
+
+  .premium-checkout-button:hover {
+    background-color: #333;
+    border-color: #333;
+  }
+
+
+
+{% endstyle %}
+
+<div class="premium-cart-container">
+  
+  <div class="premium-cart-header">
+    <h1>Your Cart</h1>
+  </div>
+
+  {% if cart.item_count > 0 %}
+    <form action="{{ routes.cart_url }}" method="post" novalidate class="premium-cart-form">
+      
+      <div class="premium-cart-items-wrapper">
+        {% for item in cart.items %}
+          <div class="premium-cart-item">
+            
+            {% if item.image %}
+              <a href="{{ item.url }}">
+                {{ item | image_url: width: 200 | image_tag: class: 'premium-item-image', alt: item.title }}
+              </a>
+            {% endif %}
+
+            <div class="premium-item-details">
+              <a href="{{ item.url }}" class="premium-item-title">{{ item.product.title }}</a>
+              
+              {% unless item.product.has_only_default_variant %}
+                <p class="premium-item-variant">{{ item.variant.title }}</p>
+              {% endunless %}
+
+              <a href="{{ routes.cart_change_url }}?line={{ forloop.index }}&quantity=0" class="premium-item-remove">Remove</a>
+            </div>
+
+            <div class="premium-item-quantity">
+              <input type="number" name="updates[]" id="updates_{{ item.key }}" value="{{ item.quantity }}" min="0" aria-label="Quantity">
+            </div>
+
+            <div class="premium-item-price">
+              {{ item.final_line_price | money }}
+            </div>
+
+          </div>
+        {% endfor %}
+      </div>
+
+     <div class="premium-cart-footer">
+  <div class="premium-cart-subtotal">
+    Subtotal <strong>{{ cart.total_price | money }}</strong>
+  </div>
+  <p class="premium-cart-notes">Taxes and shipping calculated at checkout.</p>
+  
+  <div class="premium-cart-actions">
+    <button type="submit" name="update" class="premium-cart-btn premium-update-button">
+      Update Cart
+    </button>
+
+    <button type="submit" name="checkout" class="premium-cart-btn premium-checkout-button">
+      Checkout
+    </button>
+  </div>
+</div>
+
+    </form>
+    
+  {% else %}
+    <div class="premium-cart-empty">
+      <h2>Your cart is currently empty.</h2>
+      <a href="{{ routes.all_products_collection_url }}" class="premium-continue-shopping">Continue Shopping</a>
+    </div>
+  {% endif %}
+
+</div>

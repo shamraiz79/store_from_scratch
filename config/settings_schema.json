@@ -1,0 +1,19 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Minimal Theme",
+    "theme_author": "Shamraiz",
+    "theme_version": "1.0.0",
+    "theme_documentation_url": "https://example.com/docs",
+    "theme_support_email": "support@example.com"
+  },
+  {
+    "name": "General",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Basic Settings"
+      }
+    ]
+  }
+]
