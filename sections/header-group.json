@@ -1,13 +1,26 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
-    "type": "header",
-    "name":"header-group",
-    "sections": {
-    "premium-header":{
-        "type": "premium-header",
-    
+  "type": "header",
+  "name": "header-group",
+  "sections": {
+    "premium-header": {
+      "type": "premium-header",
+      "settings": {
+        "logo_width": 150,
+        "menu": "main-menu",
+        "menu_style": "mega"
+      }
     }
-    },
-    "order":[
-        "premium-header"
-    ]
+  },
+  "order": [
+    "premium-header"
+  ]
 }
