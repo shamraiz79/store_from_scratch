@@ -265,7 +265,7 @@
 <div class="premium-cart-container">
   
   <div class="premium-cart-header">
-    <h1>Your Cart</h1>
+    <h1>{{ 'cart.title' | t }}</h1>
   </div>
 
   {% if cart.item_count > 0 %}
@@ -324,7 +324,7 @@
     
   {% else %}
     <div class="premium-cart-empty">
-      <h2>Your cart is currently empty.</h2>
+      <h2>{{ 'cart.empty' | t }}</h2>
       <a href="{{ routes.all_products_collection_url }}" class="premium-continue-shopping">Continue Shopping</a>
     </div>
   {% endif %}
