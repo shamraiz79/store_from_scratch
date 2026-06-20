@@ -8,5 +8,61 @@
  * ------------------------------------------------------------
  */
 {
-  "curent": {}
+  "curent": {},
+  "current": {
+    "sections": {
+      "footer": {
+        "type": "footer",
+        "blocks": {
+          "footer-0": {
+            "type": "text",
+            "settings": {
+              "logo_width": 120,
+              "heading": "Slashcart",
+              "subtext": "<p>A premium shopping experience built on quality, style, and exceptional service.</p>"
+            }
+          },
+          "footer-1": {
+            "type": "link_list",
+            "settings": {
+              "heading": "Quick Links",
+              "menu": "sham1"
+            }
+          },
+          "footer-2": {
+            "type": "link_list",
+            "settings": {
+              "heading": "Customer Service",
+              "menu": "customer-account-main-menu"
+            }
+          },
+          "footer-3": {
+            "type": "newsletter",
+            "settings": {
+              "heading": "Subscribe",
+              "subtext": "<p>Join our newsletter to receive updates on new arrivals, special promotions, and insider-only discounts.</p>"
+            }
+          }
+        },
+        "block_order": [
+          "footer-0",
+          "footer-1",
+          "footer-2",
+          "footer-3"
+        ],
+        "settings": {
+          "bg_color": "#0b0b0c",
+          "text_color": "#f4f4f5",
+          "text_muted_color": "#a1a1aa",
+          "accent_color": "#3b82f6",
+          "border_color": "#27272a",
+          "show_payment_icons": true,
+          "show_social_icons": true,
+          "padding_top": 80,
+          "padding_bottom": 40
+        }
+      }
+    },
+    "content_for_index": []
+  }
 }
