@@ -1,0 +1,6 @@
+{
+    "cart":{
+        "title": "your cart",
+        "empty":"your cart is currently empt"
+    }
+}

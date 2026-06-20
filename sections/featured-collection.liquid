@@ -133,6 +133,7 @@
 
   /* Card Image */
   .product-card-image-wrapper {
+    display: block;
     position: relative;
     overflow: hidden;
     width: 100%;
@@ -374,7 +375,7 @@
       {%- if featured_collection != blank and featured_collection.all_products_count > 0 -%}
         {%- for product in featured_collection.products limit: products_to_show -%}
           <div class="product-card">
-            <div class="product-card-image-wrapper aspect-ratio--{{ section.settings.image_ratio }}">
+            <a href="{{ product.url }}" class="product-card-image-wrapper aspect-ratio--{{ section.settings.image_ratio }}">
               {%- if product.featured_media != blank -%}
                 {{ product.featured_media | image_url: width: 1000 | image_tag:
                   loading: 'lazy',
@@ -402,7 +403,7 @@
                   <span class="product-badge product-badge--sold-out">Sold Out</span>
                 {%- endif -%}
               {%- endif -%}
-            </div>
+            </a>
 
             <div class="product-card-info">
               {%- if section.settings.show_vendor -%}
@@ -453,9 +454,9 @@
           {%- assign index = forloop.index0 | modulo: 6 | plus: 1 -%}
           {%- assign placeholder_name = "product-" | append: index -%}
           <div class="product-card product-card--placeholder">
-            <div class="product-card-image-wrapper aspect-ratio--{{ section.settings.image_ratio }}">
+            <a href="#" class="product-card-image-wrapper aspect-ratio--{{ section.settings.image_ratio }}">
               {{ placeholder_name | placeholder_svg_tag: 'placeholder-svg' }}
-            </div>
+            </a>
             <div class="product-card-info">
               {%- if section.settings.show_vendor -%}
                 <span class="product-card-vendor">Brand Name</span>
