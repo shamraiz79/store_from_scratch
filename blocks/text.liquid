@@ -1,0 +1,100 @@
+{% style %}
+  /* Scoped CSS for the Custom Text Section */
+  .custom-text-wrapper {
+    padding: 40px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center; /* Center aligned for a clean look */
+  }
+
+  /* Base styling to ensure the text looks good regardless of the tag chosen */
+  .custom-text-element {
+    margin: 0;
+    font-family: inherit;
+  }
+
+  /* Specific sizing based on the tag they might choose */
+  h1.custom-text-element { font-size: 2.5rem; font-weight: 700; }
+  h2.custom-text-element { font-size: 2rem; font-weight: 600; }
+  h3.custom-text-element { font-size: 1.5rem; font-weight: 600; }
+  p.custom-text-element, 
+  div.custom-text-element, 
+  span.custom-text-element { font-size: 1.1rem; line-height: 1.6; }
+{% endstyle %}
+
+<!-- Added block.shopify_attributes so the Theme Editor can interact with it -->
+<div class="custom-text-wrapper" {{ block.shopify_attributes }}>
+  
+  <!-- CHANGED: Now correctly using block.settings instead of section.settings -->
+  {%- assign tag = block.settings.html_tag -%}
+  {%- assign text = block.settings.text_content -%}
+
+  {%- if text != blank -%}
+    
+    <!-- CHANGED: Now correctly using block.settings.text_color -->
+    <{{ tag }} class="custom-text-element" style="color: {{ block.settings.text_color }};">
+      {{ text }}
+    </{{ tag }}>
+    
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Dynamic Text Block",
+  "tag": "div",
+  "class": "dynamic-text-block",
+  "settings": [
+    {
+      "type": "text",
+      "id": "text_content",
+      "label": "Text Content",
+      "default": "Add your dynamic SEO text here"
+    },
+    {
+      "type": "select",
+      "id": "html_tag",
+      "label": "HTML Element",
+      "info": "Choose the correct tag for SEO. Use H1 for main page titles, H2 for subheadings, and P for normal text.",
+      "options": [
+        {
+          "value": "h1",
+          "label": "Heading 1 (H1)"
+        },
+        {
+          "value": "h2",
+          "label": "Heading 2 (H2)"
+        },
+        {
+          "value": "h3",
+          "label": "Heading 3 (H3)"
+        },
+        {
+          "value": "p",
+          "label": "Paragraph (P)"
+        },
+        {
+          "value": "div",
+          "label": "Div Block (DIV)"
+        },
+        {
+          "value": "span",
+          "label": "Inline Text (SPAN)"
+        }
+      ],
+      "default": "p"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#000000"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Dynamic Text Block"
+    }
+  ]
+}
+{% endschema %}

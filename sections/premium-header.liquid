@@ -106,14 +106,14 @@
     position: absolute;
     top: 100%;
     left: 50%;
-    width: 850px; /* Specific width to match the reference card */
+    width: 850px; /* Default fallback width */
     max-width: 95vw;
-    min-height: 380px; /* Adds spacious height */
+    min-height: 300px;
     background: #fff;
     box-shadow: 0 20px 40px rgba(0,0,0,0.08); /* Softer, wider shadow */
     border-radius: 12px; /* Rounded corners */
     border: 1px solid #eaeaea;
-    padding: 40px 50px;
+    padding: 30px 40px;
     opacity: 0;
     visibility: hidden;
     /* translate(-50%) perfectly centers it relative to the header container */
@@ -121,7 +121,9 @@
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     z-index: 10;
     display: flex;
-    gap: 50px;
+    justify-content: space-between;
+    gap: 40px;
+    box-sizing: border-box;
   }
 
   /* Crucial: Maintain the -50% translation on hover */
@@ -131,8 +133,16 @@
     transform: translate(-50%, 0);
   }
 
+  .mega-menu-links-grid {
+    flex: 2 1 0%;
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+  }
+
   .mega-menu-column {
-    flex: 1;
+    flex: 1 1 150px;
+    min-width: 120px;
   }
 
   .mega-menu-title {
@@ -156,6 +166,113 @@
 
   .mega-menu-link:hover {
     color: #111;
+  }
+
+  /* --- PROMO IMAGES STYLES --- */
+  .mega-menu-promos {
+    flex: 1.2 1 0%;
+    display: flex;
+    gap: 20px;
+    min-width: 280px;
+  }
+
+  .mega-menu-promo-item {
+    position: relative;
+    flex: 1;
+    overflow: hidden;
+    border-radius: 8px;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    background-color: #f9f9f9;
+    border: 1px solid #eaeaea;
+    transition: all 0.3s ease;
+  }
+
+  .mega-menu-promo-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+  }
+
+  .promo-image-wrapper {
+    position: relative;
+    width: 100%;
+    height: 160px; /* fixed height for alignment */
+    overflow: hidden;
+  }
+
+  .promo-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+
+  .mega-menu-promo-item:hover .promo-image {
+    transform: scale(1.05);
+  }
+
+  .promo-content {
+    padding: 12px 15px;
+    background: #fff;
+  }
+
+  .promo-heading {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #111;
+    margin: 0 0 4px 0;
+  }
+
+  .promo-subheading {
+    font-size: 0.8rem;
+    color: #666;
+    margin: 0;
+  }
+
+  /* Overlay Style */
+  .mega-menu-promo-item.promo-layout--overlay {
+    height: 100%;
+    min-height: 220px;
+    display: block;
+  }
+
+  .mega-menu-promo-item.promo-layout--overlay .promo-image-wrapper {
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  .mega-menu-promo-item.promo-layout--overlay .promo-content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 60%, rgba(0,0,0,0) 100%);
+    padding: 15px;
+    color: #fff;
+    z-index: 2;
+    box-sizing: border-box;
+    width: 100%;
+  }
+
+  .mega-menu-promo-item.promo-layout--overlay .promo-heading {
+    color: #fff;
+    font-size: 1rem;
+  }
+
+  .mega-menu-promo-item.promo-layout--overlay .promo-subheading {
+    color: #ddd;
+    font-size: 0.82rem;
+  }
+
+  .placeholder-svg {
+    background-color: #f4f4f5;
+    fill: #a1a1aa;
+    width: 100%;
+    height: 100%;
+    display: block;
   }
 
   /* Other Header Elements */
@@ -217,33 +334,117 @@
     <nav class="premium-nav" aria-label="Main navigation">
       {% if section.settings.menu != blank %}
         {% for link in section.settings.menu.links %}
+          {%- assign mega_menu_block = nil -%}
+          {%- for block in section.blocks -%}
+            {%- assign block_menu_item = block.settings.menu_item | downcase | strip -%}
+            {%- assign link_title = link.title | downcase | strip -%}
+            {%- if block_menu_item == link_title and block_menu_item != blank -%}
+              {%- assign mega_menu_block = block -%}
+              {%- break -%}
+            {%- endif -%}
+          {%- endfor -%}
+
+          {%- assign is_mega = false -%}
+          {%- if section.settings.menu_style == 'mega' -%}
+            {%- assign is_mega = true -%}
+          {%- endif -%}
+          {%- if mega_menu_block != blank -%}
+            {%- assign is_mega = true -%}
+          {%- endif -%}
           
-          <div class="premium-nav-item {% if section.settings.menu_style == 'dropdown' %}has-dropdown{% endif %}">
+          <div class="premium-nav-item {% unless is_mega %}has-dropdown{% endunless %}">
             
             <a href="{{ link.url }}" class="premium-nav-link">
               {{ link.title }}
-              {% if link.links != blank %}
+              {% if link.links != blank or mega_menu_block != blank %}
                 <svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
               {% endif %}
             </a>
 
-            {% if link.links != blank %}
-              {% if section.settings.menu_style == 'mega' %}
-                <div class="premium-mega-menu">
-                  {% for childlink in link.links %}
-                    <div class="mega-menu-column">
-                      <a href="{{ childlink.url }}" class="mega-menu-title">{{ childlink.title }}</a>
-                      {% if childlink.links != blank %}
-                        {% for grandchildlink in childlink.links %}
-                          <a href="{{ grandchildlink.url }}" class="mega-menu-link">{{ grandchildlink.title }}</a>
-                        {% endfor %}
-                      {% endif %}
+            {% if is_mega %}
+              {% if link.links != blank or mega_menu_block != blank %}
+                <div class="premium-mega-menu" style="width: {% if mega_menu_block != blank %}{{ mega_menu_block.settings.menu_width }}{% else %}850{% endif %}px;">
+                  
+                  {% if link.links != blank %}
+                    <div class="mega-menu-links-grid">
+                      {% for childlink in link.links %}
+                        <div class="mega-menu-column">
+                          <a href="{{ childlink.url }}" class="mega-menu-title">{{ childlink.title }}</a>
+                          {% if childlink.links != blank %}
+                            {% for grandchildlink in childlink.links %}
+                              <a href="{{ grandchildlink.url }}" class="mega-menu-link">{{ grandchildlink.title }}</a>
+                            {% endfor %}
+                          {% endif %}
+                        </div>
+                      {% endfor %}
                     </div>
-                  {% endfor %}
+                  {% endif %}
+
+                  {% if mega_menu_block != blank %}
+                    {%- assign has_promo_1 = false -%}
+                    {%- assign has_promo_2 = false -%}
+                    {%- if mega_menu_block.settings.promo_image_1 != blank or mega_menu_block.settings.promo_heading_1 != blank or mega_menu_block.settings.promo_subheading_1 != blank -%}
+                      {%- assign has_promo_1 = true -%}
+                    {%- endif -%}
+                    {%- if mega_menu_block.settings.promo_image_2 != blank or mega_menu_block.settings.promo_heading_2 != blank or mega_menu_block.settings.promo_subheading_2 != blank -%}
+                      {%- assign has_promo_2 = true -%}
+                    {%- endif -%}
+
+                    {% if has_promo_1 or has_promo_2 %}
+                      <div class="mega-menu-promos">
+                        {% if has_promo_1 %}
+                          <a href="{{ mega_menu_block.settings.promo_link_1 | default: '#' }}" class="mega-menu-promo-item promo-layout--{{ mega_menu_block.settings.promo_layout }}">
+                            <div class="promo-image-wrapper">
+                              {% if mega_menu_block.settings.promo_image_1 != blank %}
+                                {{ mega_menu_block.settings.promo_image_1 | image_url: width: 400 | image_tag: class: 'promo-image', loading: 'lazy' }}
+                              {% else %}
+                                {{ 'image' | placeholder_svg_tag: 'placeholder-svg promo-image' }}
+                              {% endif %}
+                            </div>
+                            {% if mega_menu_block.settings.promo_heading_1 != blank or mega_menu_block.settings.promo_subheading_1 != blank %}
+                              <div class="promo-content">
+                                {% if mega_menu_block.settings.promo_heading_1 != blank %}
+                                  <h4 class="promo-heading">{{ mega_menu_block.settings.promo_heading_1 }}</h4>
+                                {% endif %}
+                                {% if mega_menu_block.settings.promo_subheading_1 != blank %}
+                                  <p class="promo-subheading">{{ mega_menu_block.settings.promo_subheading_1 }}</p>
+                                {% endif %}
+                              </div>
+                            {% endif %}
+                          </a>
+                        {% endif %}
+
+                        {% if has_promo_2 %}
+                          <a href="{{ mega_menu_block.settings.promo_link_2 | default: '#' }}" class="mega-menu-promo-item promo-layout--{{ mega_menu_block.settings.promo_layout }}">
+                            <div class="promo-image-wrapper">
+                              {% if mega_menu_block.settings.promo_image_2 != blank %}
+                                {{ mega_menu_block.settings.promo_image_2 | image_url: width: 400 | image_tag: class: 'promo-image', loading: 'lazy' }}
+                              {% else %}
+                                {{ 'image' | placeholder_svg_tag: 'placeholder-svg promo-image' }}
+                              {% endif %}
+                            </div>
+                            {% if mega_menu_block.settings.promo_heading_2 != blank or mega_menu_block.settings.promo_subheading_2 != blank %}
+                              <div class="promo-content">
+                                {% if mega_menu_block.settings.promo_heading_2 != blank %}
+                                  <h4 class="promo-heading">{{ mega_menu_block.settings.promo_heading_2 }}</h4>
+                                {% endif %}
+                                {% if mega_menu_block.settings.promo_subheading_2 != blank %}
+                                  <p class="promo-subheading">{{ mega_menu_block.settings.promo_subheading_2 }}</p>
+                                {% endif %}
+                              </div>
+                            {% endif %}
+                          </a>
+                        {% endif %}
+                      </div>
+                    {% endif %}
+                  {% endif %}
+
                 </div>
-              {% else %}
+              {% endif %}
+            {% else %}
+              {% if link.links != blank %}
                 <div class="premium-dropdown">
                   {% for childlink in link.links %}
                     <a href="{{ childlink.url }}">{{ childlink.title }}</a>
@@ -336,6 +537,94 @@
       ],
       "default": "dropdown",
       "info": "Mega menu will display nested link levels in horizontal columns."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "mega_menu",
+      "name": "Mega Menu Content",
+      "settings": [
+        {
+          "type": "text",
+          "id": "menu_item",
+          "label": "Menu Item Title",
+          "info": "Enter the exact title of the navigation item (e.g., 'Shop' or 'Collections') to apply this mega menu content."
+        },
+        {
+          "type": "range",
+          "id": "menu_width",
+          "min": 700,
+          "max": 1300,
+          "step": 50,
+          "unit": "px",
+          "label": "Mega Menu Width",
+          "default": 900
+        },
+        {
+          "type": "select",
+          "id": "promo_layout",
+          "label": "Promo Image Layout",
+          "options": [
+            {
+              "value": "stacked",
+              "label": "Stacked (Image with text below)"
+            },
+            {
+              "value": "overlay",
+              "label": "Overlay (Text on top of image)"
+            }
+          ],
+          "default": "stacked"
+        },
+        {
+          "type": "header",
+          "content": "Image Promotion 1"
+        },
+        {
+          "type": "image_picker",
+          "id": "promo_image_1",
+          "label": "Promo Image 1"
+        },
+        {
+          "type": "text",
+          "id": "promo_heading_1",
+          "label": "Promo Heading 1"
+        },
+        {
+          "type": "text",
+          "id": "promo_subheading_1",
+          "label": "Promo Subheading 1"
+        },
+        {
+          "type": "url",
+          "id": "promo_link_1",
+          "label": "Promo Link 1"
+        },
+        {
+          "type": "header",
+          "content": "Image Promotion 2"
+        },
+        {
+          "type": "image_picker",
+          "id": "promo_image_2",
+          "label": "Promo Image 2"
+        },
+        {
+          "type": "text",
+          "id": "promo_heading_2",
+          "label": "Promo Heading 2"
+        },
+        {
+          "type": "text",
+          "id": "promo_subheading_2",
+          "label": "Promo Subheading 2"
+        },
+        {
+          "type": "url",
+          "id": "promo_link_2",
+          "label": "Promo Link 2"
+        }
+      ]
     }
   ],
   "presets": [

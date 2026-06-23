@@ -1,0 +1,102 @@
+{% style %}
+  /* Scoped CSS to handle the container and responsive scaling */
+  .custom-image-wrapper-{{ block.id }} {
+    width: 100%;
+    padding: {{ block.settings.padding_top }}px 20px {{ block.settings.padding_bottom }}px 20px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+  }
+
+  .custom-image-wrapper-{{ block.id }} img,
+  .custom-image-wrapper-{{ block.id }} svg {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    border-radius: {{ block.settings.corner_radius }}px; /* Optional touch of polish */
+    object-fit: cover;
+  }
+
+  /* Placeholder SVG styling */
+  .custom-image-wrapper-{{ block.id }} svg {
+    width: 100%;
+    max-width: 800px;
+    background-color: #f4f4f4;
+  }
+{% endstyle %}
+
+<!-- Added block.shopify_attributes for Theme Editor support -->
+<div class="custom-image-wrapper-{{ block.id }}" {{ block.shopify_attributes }}>
+  {%- if block.settings.image != blank -%}
+    <!-- 
+      The image_tag filter automatically generates the 'srcset' 
+      attribute, making the image perfectly responsive across all devices. 
+    -->
+    {{ block.settings.image | image_url: width: 2000 | image_tag: loading: 'lazy', alt: block.settings.image.alt | escape }}
+  {%- else -%}
+    <!-- Fallback if the user hasn't selected an image yet -->
+    {{ 'image' | placeholder_svg_tag }}
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Responsive Image",
+  "tag": "div",
+  "class": "custom-image-block",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Image Selection"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Select Image"
+    },
+    {
+      "type": "header",
+      "content": "Styling"
+    },
+    {
+      "type": "range",
+      "id": "corner_radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Image Corner Roundness",
+      "default": 8
+    },
+    {
+      "type": "header",
+      "content": "Section Layout Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Top Spacing",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom Spacing",
+      "default": 32
+    }
+  ],
+  "presets": [
+    {
+      "name": "Responsive Image"
+    }
+  ]
+}
+{% endschema %}

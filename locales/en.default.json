@@ -1,6 +1,8 @@
 {
     "cart":{
         "title": "your cart",
-        "empty":"your cart is currently empt"
+        "empty":"your cart is currently empty",
+        "continue_shopping":"continue shopping"
+        
     }
 }
